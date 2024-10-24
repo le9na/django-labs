@@ -1,13 +1,15 @@
 <!DOCTYPE html>
-<html lang="en">
+<html>
+{% load static %}<!-- load static -->
 <head>
- <title>Show one Book</title>
+ <title>My First Index HTML Page</title>
  <meta name="keywords" content="Books, recent, Learning, library">
  <meta name="description" content="Books website">
  <meta name="author" content="author name">
- <link rel="icon" href="qu-icon.png">
+ <link rel="icon" href="{% static 'qu-icon.png' %}"> <!-- static template tag -->
  <meta charset="UTF-8">
- <link rel="stylesheet" href="styles.css"> <!-- include css file -->
+ <link rel="stylesheet" href="{% static 'styles.css' %}"> <!-- static template tag -->
+ 
 </head>
 <body>
 <a href="list_books.html">Go Back</a>

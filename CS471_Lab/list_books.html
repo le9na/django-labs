@@ -1,13 +1,15 @@
 <!DOCTYPE html>
-<html lang="en">
+<html>
+{% load static %}<!-- load static -->
 <head>
- <title>List of Books</title>
+ <title>My First Index HTML Page</title>
  <meta name="keywords" content="Books, recent, Learning, library">
  <meta name="description" content="Books website">
  <meta name="author" content="author name">
- <link rel="icon" href="qu-icon.png">
+ <link rel="icon" href="{% static 'qu-icon.png' %}"> <!-- static template tag -->
  <meta charset="UTF-8">
- <style> /* add internal css */
+ <link rel="stylesheet" href="{% static 'styles.css' %}"> <!-- static template tag -->
+ 
     h1{
     color: green;
     }
@@ -18,7 +20,6 @@
     font-family: verdana;
     font-size: 20px;
     }
-   
     </style>
     <link rel="stylesheet" href="styles.css"> <!-- include css file -->
 </head>
