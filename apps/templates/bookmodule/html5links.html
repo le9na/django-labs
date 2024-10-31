@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="en">
+{% load static %}
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Links</title>
+    <link rel="stylesheet" href="{% static 'main.css' %}">
+    {% block stylesheets %} {% endblock stylesheets %}
+</head>
+<body>
+    {% block content %} 
+        <div class="block" id="block1">
+            <a href="https://www.qu.edu.sa/" target="_blank">Go to QU website (Open a new tab)</a>
+        </div>
+        <div class="block" id="block2">
+            <a href="https://www.qu.edu.sa/" target="_self">Go to QU website (Open in same tab)</a>
+        </div>
+        <div class="block" id="block3">
+            <a href="https://www.qu.edu.sa/" target="_top">Go to QU website (Open in same tab)</a>
+        </div>
+    {% endblock content %}
+</body>
+</html>

@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en">
+{% load static %}
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Formatting</title>
+    <link rel="stylesheet" href="{% static 'main.css' %}">
+    {% block stylesheets %} {% endblock stylesheets %}
+</head>
+<body>
+    {% block content %} 
+        <div class="example">Example of Formatting Tags</div>
+        <div class="otherexm">This text has <b>subtext</b> using b tag</div>
+        <div class="otherexm">This text has <strong>subtext</strong> using strong tag</div>
+        <div class="otherexm">This text has <i>subtext</i> using i tag</div>
+        <div class="otherexm">This text has <em>subtext</em> emphasize tag</div>
+        <div class="otherexm">This text has <small>subtext</small> using small tag</div>
+        <div class="otherexm">This text has <mark>subtext</mark> using mark tag</div>
+        <div class="otherexm">This text has <del>subtext</del> using del tag</div>
+        <div class="otherexm">This text has <ins>subtext</ins> using ins tag</div>
+        <div class="otherexm">This text has X<sub>subtext</sub> using sub tag</div>
+        <div class="otherexm">This text has X<sup>subtext</sup> using sup tag</div>
+    {% endblock content %}
+</body>
+</html>
