@@ -1,0 +1,12 @@
+{% extends "layouts/base.html" %}
+{% load static %}
+{% block title %} Book display {% endblock title %}
+
+
+{% block content %}
+    <h4>Search Results:</h4>
+    {% for book in books %}
+        <h4>Book title: {{ book.title }}</h4>
+        <h4>Authors:</h4> {{ book.author }}
+    {% endfor %}
+{% endblock content %}
