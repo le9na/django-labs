@@ -5,8 +5,9 @@
 
 {% block content %}
     <h4>Search Results:</h4>
-    {% for book in books %}
-        <h4>Book title: {{ book.title }}</h4>
-        <h4>Authors:</h4> {{ book.author }}
+    
+    {% for obj in books %}
+        ID: {{ obj.id }}, Title: {{ obj.title }}
+        <hr>
     {% endfor %}
 {% endblock content %}
