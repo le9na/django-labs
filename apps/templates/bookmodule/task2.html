@@ -1,0 +1,11 @@
+{% extends "layouts/base.html" %}
+{% block title %} <title>Task 2</title>{% endblock title %}
+{% load static %}
+{% block content %}
+    <h1>Books with editions > 2 and 'qu' in title or author</h1>
+    <ul>
+        {% for book in books %}
+            <li>{{ book.title }}, Author: {{ book.author }}, Editions: {{ book.edition }}</li>
+        {% endfor %}
+    </ul>
+    {% endblock content %}

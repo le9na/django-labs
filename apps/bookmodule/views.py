@@ -1,6 +1,7 @@
 from django.shortcuts import render
 from django.http import HttpResponse
-from .models import Book
+from .models import Book, Address, Student
+from django.db.models import Q, Count, Sum, Avg, Max, Min
 
 def index(request):
     name = request.GET.get("name") or "world!"
@@ -82,3 +83,34 @@ def __insertion_db():
     book3 = Book(title = 'The Hundred-Page Machine Learning Book', author = 'Andriy Burkov', edition = 1)
     book3.save()
     
+    
+def task1(request):
+    books = Book.objects.filter(Q(price__lte = 50))
+    return render(request, 'bookmodule/task1.html',{'books':books})
+
+def task2(request):
+    books = Book.objects.filter(Q(edition_gt = 2) & (Q(titleicontains='qu') | Q(author_icontains='qu')))
+    return render(request, 'bookmodule/task2.html',{'books':books})
+
+def task3(request):
+    books = Book.objects.filter(~Q(edition_gt = 2) & (~Q(titleicontains='qu')| ~Q(author_icontains='qu')))
+    return render(request, 'bookmodule/task3.html',{'books':books})
+
+def task4(request):
+    books = Book.objects.all().order_by('title')
+    return render(request, 'bookmodule/task4.html',{'books':books})
+
+def task5(request):
+    mybooks = Book.objects.aggregate(
+        total_books=Count('id'),
+        total_price=Sum('price'),
+        average_price=Avg('price'),
+        max_price=Max('price'),
+        min_price=Min('price')
+    )
+    return render(request, 'bookmodule/task5.html', {'stats': mybooks})
+
+def task6(request):
+    city_counts = Address.objects.annotate(student_count=Count('student')).values_list('city', 'student_count')
+    city_counts_dict = dict(city_counts)
+    return render(request, 'bookmodule/task6.html', {'city_counts': city_counts_dict})
