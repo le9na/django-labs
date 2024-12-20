@@ -2,7 +2,7 @@ from django.shortcuts import render, get_object_or_404, redirect
 from django.http import HttpResponse
 from .models import Book, Address, Student
 from django.db.models import Q, Count, Sum, Avg, Max, Min
-from .forms import BookForm, StudentForm, AddressForm
+from .forms import BookForm, StudentForm, AddressForm, ImageUploadForm
 
 def index(request):
     name = request.GET.get("name") or "world!"
@@ -216,3 +216,13 @@ def delete_student(request, id):
     student = get_object_or_404(Student, id=id)
     student.delete()
     return redirect('list_students')
+
+def upload_image(request):
+    if request.method == 'POST':
+        form = ImageUploadForm(request.POST, request.FILES)
+        if form.is_valid():
+            form.save()
+            return redirect('list_images')
+    else:
+        form = ImageUploadForm()
+    return render(request, 'bookmodule/upload_image.html', {'form': form})
