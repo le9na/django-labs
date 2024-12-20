@@ -1,7 +1,8 @@
-from django.shortcuts import render
+from django.shortcuts import render, get_object_or_404, redirect
 from django.http import HttpResponse
-from .models import Book, Address, Student
+from .models import Book # , Address, Student
 from django.db.models import Q, Count, Sum, Avg, Max, Min
+from .forms import BookForm
 
 def index(request):
     name = request.GET.get("name") or "world!"
@@ -83,7 +84,7 @@ def __insertion_db():
     book3 = Book(title = 'The Hundred-Page Machine Learning Book', author = 'Andriy Burkov', edition = 1)
     book3.save()
     
-    
+
 def task1(request):
     books = Book.objects.filter(Q(price__lte = 50))
     return render(request, 'bookmodule/task1.html',{'books':books})
@@ -111,6 +112,73 @@ def task5(request):
     return render(request, 'bookmodule/task5.html', {'stats': mybooks})
 
 def task6(request):
-    city_counts = Address.objects.annotate(student_count=Count('student')).values_list('city', 'student_count')
-    city_counts_dict = dict(city_counts)
-    return render(request, 'bookmodule/task6.html', {'city_counts': city_counts_dict})
+    #city_counts = Address.objects.annotate(student_count=Count('student')).values_list('city', 'student_count')
+    #city_counts_dict = dict(city_counts)
+    #return render(request, 'bookmodule/task6.html', {'city_counts': city_counts_dict})
+    return 
+
+# Task 1: List books
+def list_books(request):
+    books = Book.objects.all()
+    return render(request, 'bookmodule/lab9/list_books.html', {'books': books})
+
+# Task 2: Add a new book
+def add_book(request):
+    if request.method == 'POST':
+        title = request.POST['title']
+        author = request.POST['author']
+        description = request.POST.get('description', '')
+        Book.objects.create(title=title, author=author, description=description)
+        return redirect('list_books')
+    return render(request, 'bookmodule/lab9/add_book.html')
+
+# Task 3: Edit a book
+def edit_book(request, id):
+    book = get_object_or_404(Book, id=id)
+    if request.method == 'POST':
+        book.title = request.POST['title']
+        book.author = request.POST['author']
+        book.description = request.POST.get('description', '')
+        book.save()
+        return redirect('list_books')
+    return render(request, 'bookmodule/lab9/edit_book.html', {'book': book})
+
+# Task 4: Delete a book
+def delete_book(request, id):
+    book = get_object_or_404(Book, id=id)
+    book.delete()
+    return redirect('list_books')
+
+# Task 1: List books
+def list_books_with_forms(request):
+    books = Book.objects.all()
+    return render(request, 'bookmodule/lab9_part2/list_books_with_forms.html', {'books': books})
+
+# Task 2: Add a new book using a form
+def add_book_with_form(request):
+    if request.method == 'POST':
+        form = BookForm(request.POST)
+        if form.is_valid():
+            form.save()
+            return redirect('list_books_with_forms')
+    else:
+        form = BookForm()
+    return render(request, 'bookmodule/lab9_part2/add_book_with_form.html', {'form': form})
+
+# Task 3: Edit a book using a form
+def edit_book_with_form(request, id):
+    book = get_object_or_404(Book, id=id)
+    if request.method == 'POST':
+        form = BookForm(request.POST, instance=book)
+        if form.is_valid():
+            form.save()
+            return redirect('list_books_with_forms')
+    else:
+        form = BookForm(instance=book)
+    return render(request, 'bookmodule/lab9_part2/edit_book_with_form.html', {'form': form})
+
+# Task 4: Delete a book
+def delete_book_with_form(request, id):
+    book = get_object_or_404(Book, id=id)
+    book.delete()
+    return redirect('list_books_with_forms')
