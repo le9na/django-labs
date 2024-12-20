@@ -26,4 +26,8 @@ urlpatterns = [
     path('lab9_part2/addbook', views.add_book_with_form, name='add_book_with_form'),
     path('lab9_part2/editbook/<int:id>', views.edit_book_with_form, name='edit_book_with_form'),
     path('lab9_part2/deletebook/<int:id>', views.delete_book_with_form, name='delete_book_with_form'),
+    path('students/', views.list_students, name='list_students'),
+    path('students/add', views.add_student, name='add_student'),
+    path('students/edit/<int:id>', views.edit_student, name='edit_student'),
+    path('students/delete/<int:id>', views.delete_student, name='delete_student'),
 ]

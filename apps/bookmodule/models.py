@@ -1,6 +1,6 @@
 from django.db import models
-"""
-# Lab 8 Models
+
+# Lab 8 and 10 Models 
 class Address(models.Model):
     city = models.CharField(max_length=100)
     def _str_(self):
@@ -16,11 +16,13 @@ class Book(models.Model):
     author = models.CharField(max_length=50)
     price = models.FloatField(default=0.0)
     edition = models.SmallIntegerField(default=1)
+    description = models.TextField(blank=True, null=True)
     class Meta:
         app_label = 'bookmodule'
+        
 """
-
 # Lab 7 and 9 Model
+
 class Book(models.Model):
     title = models.CharField(max_length=200)
     author = models.CharField(max_length=100)
@@ -28,3 +30,5 @@ class Book(models.Model):
 
     def __str__(self):
         return self.title
+        
+"""

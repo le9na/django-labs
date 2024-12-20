@@ -1,8 +1,8 @@
 from django.shortcuts import render, get_object_or_404, redirect
 from django.http import HttpResponse
-from .models import Book # , Address, Student
+from .models import Book, Address, Student
 from django.db.models import Q, Count, Sum, Avg, Max, Min
-from .forms import BookForm
+from .forms import BookForm, StudentForm, AddressForm
 
 def index(request):
     name = request.GET.get("name") or "world!"
@@ -182,3 +182,37 @@ def delete_book_with_form(request, id):
     book = get_object_or_404(Book, id=id)
     book.delete()
     return redirect('list_books_with_forms')
+
+# List students
+def list_students(request):
+    students = Student.objects.all()
+    return render(request, 'students/list_students.html', {'students': students})
+
+# Add student
+def add_student(request):
+    if request.method == 'POST':
+        form = StudentForm(request.POST)
+        if form.is_valid():
+            form.save()
+            return redirect('list_students')
+    else:
+        form = StudentForm()
+    return render(request, 'bookmodule/add_student.html', {'form': form})
+
+# Edit student
+def edit_student(request, id):
+    student = get_object_or_404(Student, id=id)
+    if request.method == 'POST':
+        form = StudentForm(request.POST, instance=student)
+        if form.is_valid():
+            form.save()
+            return redirect('list_students')
+    else:
+        form = StudentForm(instance=student)
+    return render(request, 'bookmodule/edit_student.html', {'form': form})
+
+# Delete student
+def delete_student(request, id):
+    student = get_object_or_404(Student, id=id)
+    student.delete()
+    return redirect('list_students')
