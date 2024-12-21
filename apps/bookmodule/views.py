@@ -1,8 +1,8 @@
 from django.shortcuts import render, get_object_or_404, redirect
 from django.http import HttpResponse
-from .models import Book, Address, Student
+from .models import Book, Address, Student, Student2, Address2
 from django.db.models import Q, Count, Sum, Avg, Max, Min
-from .forms import BookForm, StudentForm, AddressForm, ImageUploadForm
+from .forms import BookForm, StudentForm, AddressForm, ImageUploadForm, Student2Form, Address2Form
 
 def index(request):
     name = request.GET.get("name") or "world!"
@@ -226,3 +226,38 @@ def upload_image(request):
     else:
         form = ImageUploadForm()
     return render(request, 'bookmodule/upload_image.html', {'form': form})
+
+
+# List students
+def list_students2(request):
+    students = Student2.objects.all()
+    return render(request, 'bookmodule/list_students2.html', {'students': students})
+
+# Add student
+def add_student2(request):
+    if request.method == 'POST':
+        form = Student2Form(request.POST)
+        if form.is_valid():
+            form.save()
+            return redirect('list_students2')
+    else:
+        form = Student2Form()
+    return render(request, 'bookmodule/add_student2.html', {'form': form})
+
+# Edit student
+def edit_student2(request, id):
+    student = get_object_or_404(Student2, id=id)
+    if request.method == 'POST':
+        form = Student2Form(request.POST, instance=student)
+        if form.is_valid():
+            form.save()
+            return redirect('list_students2')
+    else:
+        form = Student2Form(instance=student)
+    return render(request, 'bookmodule/edit_student2.html', {'form': form})
+
+# Delete student
+def delete_student2(request, id):
+    student = get_object_or_404(Student2, id=id)
+    student.delete()
+    return redirect('list_students2')

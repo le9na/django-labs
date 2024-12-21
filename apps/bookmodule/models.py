@@ -26,7 +26,16 @@ class Book(models.Model):
     description = models.TextField(blank=True, null=True)
     class Meta:
         app_label = 'bookmodule'
-        
+
+class Address2(models.Model):
+    street = models.CharField(max_length=200)
+    city = models.CharField(max_length=100)
+
+class Student2(models.Model):
+    name = models.CharField(max_length=100)
+    email = models.EmailField()
+    addresses = models.ManyToManyField(Address2)
+
 """
 # Lab 7 and 9 Model
 

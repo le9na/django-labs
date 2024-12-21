@@ -1,5 +1,5 @@
 from django import forms
-from .models import Book, Address, Student, ImageUpload
+from .models import Book, Address, Student, ImageUpload, Address2, Student2
 
 
 class BookForm(forms.ModelForm):
@@ -30,3 +30,19 @@ class ImageUploadForm(forms.ModelForm):
     class Meta:
         model = ImageUpload
         fields = ['title', 'image']
+
+class Address2Form(forms.ModelForm):
+    class Meta:
+        model = Address2
+        fields = ['street', 'city']
+
+class Student2Form(forms.ModelForm):
+    addresses = forms.ModelMultipleChoiceField(
+        queryset=Address2.objects.all(),
+        widget=forms.CheckboxSelectMultiple,
+        required=True
+    )
+
+    class Meta:
+        model = Student2
+        fields = ['name', 'email', 'addresses']
